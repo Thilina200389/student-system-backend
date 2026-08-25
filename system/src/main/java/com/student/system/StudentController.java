@@ -6,25 +6,22 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/students")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "https://student-system-frontend-eta.vercel.app", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS})
 public class StudentController {
 
     @Autowired
     private StudentRepository studentRepository;
 
-    // CREATE
     @PostMapping
     public Student addStudent(@RequestBody Student student) {
         return studentRepository.save(student);
     }
 
-    // READ
     @GetMapping
     public List<Student> getAllStudents() {
         return studentRepository.findAll();
     }
 
-    // UPDATE
     @PutMapping("/{id}")
     public Student updateStudent(@PathVariable Long id, @RequestBody Student studentDetails) {
         Student student = studentRepository.findById(id).orElseThrow();
@@ -34,7 +31,6 @@ public class StudentController {
         return studentRepository.save(student);
     }
 
-    // DELETE
     @DeleteMapping("/{id}")
     public String deleteStudent(@PathVariable Long id) {
         studentRepository.deleteById(id);
